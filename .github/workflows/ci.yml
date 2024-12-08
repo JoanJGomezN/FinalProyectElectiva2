@@ -1,28 +1,44 @@
-name: test.js CI
+name: CI for Practica Final
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest  # Puedes cambiar a otro sistema si lo necesitas
+
     steps:
+    # Paso 1: Configurar Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Ajusta a la versión de Node.js que estés utilizando
+
+    # Paso 2: Obtener el código fuente
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up test.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'  # O cualquier otra versión de Node.js
+    # Paso 3: Limpiar la caché de npm (si hay problemas con versiones anteriores)
+    - name: Clear npm cache
+      run: npm cache clean --force
 
+    # Paso 4: Instalar las dependencias
     - name: Install dependencies
       run: npm install
 
+    # Paso 5: Ajustar los permisos en node_modules
+    - name: Fix permissions
+      run: sudo chmod -R 777 ./node_modules
+
+    # Paso 6: Ejecutar los tests de Jest
     - name: Run tests
-      run: npx jest  # Ejecuta el script "test" que usa jest
+      run: npx --no-install jest
+
+    # Paso 7: Mostrar los resultados de los tests (opcional)
+    - name: Show test results
+      run: cat jest-test-results.json
