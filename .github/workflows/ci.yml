@@ -25,4 +25,4 @@ jobs:
       run: npm install
 
     - name: Run tests
-      run: npm test  # Ejecuta el script "test" que usa jest
+      run: npx jest  # Ejecuta el script "test" que usa jest
