@@ -39,6 +39,4 @@ jobs:
     - name: Run tests
       run: npx --no-install jest
 
-    # Paso 7: Mostrar los resultados de los tests (opcional)
-    - name: Show test results
-      run: cat jest-test-results.json
+   
